@@ -1,47 +1,65 @@
-import express from 'express';
 import dotenv from 'dotenv';
-import mongoose from 'mongoose';
-//import bookRoutes from './src/routes/book.routes.js';
-//import userRoutes from './src/routes/user.routes.js';
+import app from './src/app.js';
+//import mongoose from 'mongoose';
+import connectDB from './src/config/database.js';
+
 
 dotenv.config();
-const app = express();
-const PORT = process.env.SERVER_PORT || 5000;
 
-// Middleware pour parser les données de la requête en JSON
-app.use(express.json());
+const normalizePort = val => {
+  const port = parseInt(val, 10);
 
-// Routes pour les livres
-//app.use('/api/books', bookRoutes);
+  if (isNaN(port)) {
+    return val;
+  }
+  if (port >= 0) {
+    return port;
+  }
+  return false;
+};
 
-// Routes pour les utilisateurs
-//app.use('/api/users', userRoutes);
+const PORT = normalizePort(process.env.APP_PORT || '5000');
 
-// Middleware pour gérer les erreurs 404
-app.use((req, res, next) => {
-   const error = new Error('Not Found');
-   error.status = 404;
-   next(error);
+
+const errorHandler = error => {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+  const address = server.address();
+  const bind = typeof address === 'string' ? 'pipe ' + address : 'port: ' + PORT;
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges.');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use.');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+};
+
+app.listen(PORT, (err) => {
+  if (err) {
+    errorHandler(err);
+    console.error("Something bad happened");
+  } else {
+    // eslint-disable-next-line no-restricted-syntax
+    console.log(`Server is listening on ${PORT}`);
+    connectDB();
+  }
 });
 
-// Middleware pour gérer les autres erreurs
-app.use((error, req, res, next) => {
-   res.status(error.status || 500);
-   res.json({
-      error: {
-         message: error.message
-      }
-   });
-});
-
-// Connexion à la base de données MongoDB
-mongoose.connect(process.env.DB_CONNECT, {
-   useNewUrlParser: true,
-   useUnifiedTopology: true
-})
-.then(() => {
-   console.log('Connexion à la base de données réussie !');
-   // Lancement de l'application
-   app.listen(PORT, () => console.log(`Le serveur a démarré sur le port ${PORT}.`));
-})
-.catch(err => console.log(err));
+// //Connexion à la base de données MongoDB
+// mongoose.connect(process.env.DB_CONNECT, {
+//    useNewUrlParser: true,
+//    useUnifiedTopology: true
+// })
+// .then(() => {
+//    console.log('Connexion à la base de données réussie !');
+//    // Lancement de l'application
+//    //app.listen(PORT, () => console.log(`Le serveur a démarré sur le port ${PORT}.`));
+// })
+// .catch(err => console.log(err));
