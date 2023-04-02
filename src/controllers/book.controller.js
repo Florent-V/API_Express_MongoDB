@@ -16,18 +16,6 @@ export const getBooks = async (req, res) => {
    }
 };
 
-/*
-
-        { pages: { 
-          $lt: req.query.max_pages || 100,
-          $gt: req.query.min_pages || 50
-         }
-        }
-,
-         title: { $regex: req.query.title || false, $options: 'i' },
-         author: { $regex: req.query.author || false, $options: 'i' }
-*/
-
 export const getBookById = async (req, res) => {
 
    try {

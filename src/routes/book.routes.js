@@ -3,7 +3,7 @@ import { createBook, deleteBook, getBookById, getBooks, updateBook } from '../co
 
 const router = express.Router();
 
-router.get('/', getBooks);
+router.get('', getBooks);
 router.get('/:id', getBookById);
 router.post('/', createBook);
 router.put('/:id', updateBook);

@@ -1,6 +1,5 @@
 import dotenv from 'dotenv';
 import app from './src/app.js';
-//import mongoose from 'mongoose';
 import connectDB from './src/config/database.js';
 
 
@@ -51,15 +50,3 @@ app.listen(PORT, (err) => {
     connectDB();
   }
 });
-
-// //Connexion à la base de données MongoDB
-// mongoose.connect(process.env.DB_CONNECT, {
-//    useNewUrlParser: true,
-//    useUnifiedTopology: true
-// })
-// .then(() => {
-//    console.log('Connexion à la base de données réussie !');
-//    // Lancement de l'application
-//    //app.listen(PORT, () => console.log(`Le serveur a démarré sur le port ${PORT}.`));
-// })
-// .catch(err => console.log(err));
