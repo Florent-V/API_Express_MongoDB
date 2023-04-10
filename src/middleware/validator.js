@@ -71,3 +71,27 @@ export const bookSchema = Joi.object({
   pages: Joi.number().min(0).max(10000).required(),
   isRead: Joi.boolean().required()
 })
+
+export const validateUser = (req, res, next) => {
+  const { username, email, password } = req.body
+  const cleanRequestBody = { username, email, password }
+  cleanRequestBody.role = "user"
+
+  const { error } = userSchema.validate(
+    cleanRequestBody,
+    { abortEarly: false }
+  )
+  if (error) {
+    res.status(422).json({ validationErrors: error.details });
+  } else {
+    req.body = cleanRequestBody;
+    next();
+  }
+}
+
+export const userSchema = Joi.object({
+  username: Joi.string().max(255).required(),
+  email: Joi.string().min(3).max(255).required().email(),
+  password: Joi.string().min(8).max(255).required(),
+  role: Joi.string().max(255).required()
+})

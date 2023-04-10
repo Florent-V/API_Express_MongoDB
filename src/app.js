@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser';
 //import mongoose from 'mongoose';
 import bookRoutes from './routes/book.routes.js';
 import movieRoutes from './routes/movie.routes.js';
-//import userRoutes from './routes/user.routes.js';
+import userRoutes from './routes/user.routes.js';
 
 dotenv.config();
 const app = express();
@@ -18,10 +18,10 @@ app.use(cookieParser());
 
 // Routes pour les livres
 app.use('/api/books', bookRoutes);
+// Routes pour les films
 app.use('/api/movies', movieRoutes);
-
 // Routes pour les utilisateurs
-//app.use('/api/users', userRoutes);
+app.use('/api/users', userRoutes);
 
 app.get('/', (req, res) => {
   console.log('ok');
