@@ -31,11 +31,8 @@ export const getBookById = async (req, res) => {
 
 export const createBook = async (req, res) => {
    const book = new Book({
-      title: req.body.title,
-      author: req.body.author,
-      pages: req.body.pages,
-      isRead: req.body.isRead
-   });
+    ...req.body,
+  });
 
    try {
       const newBook = await book.save();
@@ -48,10 +45,7 @@ export const createBook = async (req, res) => {
 export const updateBook = async (req, res) => {
   const book = new Book({
     _id: req.params.id,
-    title: req.body.title,
-    author: req.body.author,
-    pages: req.body.pages,
-    isRead: req.body.isRead
+    ...req.body,
   });
    try {
       await Book.updateOne({ _id: req.params.id }, book)

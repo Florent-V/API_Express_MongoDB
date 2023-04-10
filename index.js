@@ -2,7 +2,6 @@ import dotenv from 'dotenv';
 import app from './src/app.js';
 import connectDB from './src/config/database.js';
 
-
 dotenv.config();
 
 const normalizePort = val => {
@@ -18,7 +17,6 @@ const normalizePort = val => {
 };
 
 const PORT = normalizePort(process.env.APP_PORT || '5000');
-
 
 const errorHandler = error => {
   if (error.syscall !== 'listen') {

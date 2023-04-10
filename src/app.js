@@ -2,7 +2,6 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 
-
 //import mongoose from 'mongoose';
 import bookRoutes from './routes/book.routes.js';
 import movieRoutes from './routes/movie.routes.js';
@@ -17,15 +16,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-
 // Routes pour les livres
 app.use('/api/books', bookRoutes);
 app.use('/api/movies', movieRoutes);
 
-
 // Routes pour les utilisateurs
 //app.use('/api/users', userRoutes);
-
 
 app.get('/', (req, res) => {
   console.log('ok');

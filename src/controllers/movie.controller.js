@@ -31,17 +31,7 @@ export const getMovieById = async (req, res) => {
 
 export const createMovie = async (req, res) => {
   const movie = new Movie({
-    title: req.body.title,
-    director: req.body.director,
-    year: req.body.year,
-    isWatched: req.body.isWatched,
-    poster: req.body.poster,
-    description: req.body.description,
-    rating: req.body.rating,
-    duration: req.body.duration,
-    genre: req.body.genre,
-    // actors: req.body.actors,
-    // comments: req.body.comments,
+    ...req.body,
   });
 
   try {
@@ -55,17 +45,7 @@ export const createMovie = async (req, res) => {
 export const updateMovie = async (req, res) => {
   const movie = new Movie({
     _id: req.params.id,
-    title: req.body.title,
-    director: req.body.director,
-    year: req.body.year,
-    isWatched: req.body.isWatched,
-    poster: req.body.poster,
-    description: req.body.description,
-    rating: req.body.rating,
-    duration: req.body.duration,
-    genre: req.body.genre,
-    // actors: req.body.actors,
-    // comments: req.body.comments,
+    ...req.body,
   });
   try {
     await Movie.updateOne({ _id: req.params.id }, movie);

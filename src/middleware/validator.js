@@ -19,14 +19,16 @@ export const validate = (schema) => {
 
 export const validateMovie = (req, res, next) => {
   const { title, director, year, isWatched, poster, description, rating, duration, genre } = req.body
+  const cleanRequestBody = { title, director, year, isWatched, poster, description, rating, duration, genre }
 
   const { error } = movieSchema.validate(
-    { title, director, year, isWatched, poster, description, rating, duration, genre },
+    cleanRequestBody,
     { abortEarly: false }
   )
   if (error) {
     res.status(422).json({ validationErrors: error.details });
   } else {
+    req.body = cleanRequestBody;
     next();
   }
 }
@@ -49,14 +51,16 @@ export const movieSchema = Joi.object({
 
 export const validateBook = (req, res, next) => {
   const { title, author, pages, isRead } = req.body
+  const cleanRequestBody = { title, author, pages, isRead }
 
   const { error } = bookSchema.validate(
-    { title, author, pages, isRead },
+    cleanRequestBody,
     { abortEarly: false }
   )
   if (error) {
     res.status(422).json({ validationErrors: error.details });
   } else {
+    req.body = cleanRequestBody;
     next();
   }
 }
