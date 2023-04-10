@@ -4,7 +4,10 @@ export const getBooks = async (req, res) => {
    try {
     console.log(req.query)
       const books = await Book.find({
-        pages:{ $lt: req.query.max_pages || Infinity, $gt: req.query.min_pages || 0},
+        pages:{ 
+          $lt: req.query.max_pages || Infinity,
+          $gt: req.query.min_pages || 0
+        },
         title: { $regex: req.query.title || '', $options: 'i' },
         author: { $regex: req.query.author || '', $options: 'i' },
         isRead: req.query.isRead || { $in: [true, false] }

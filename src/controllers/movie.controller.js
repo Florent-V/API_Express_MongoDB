@@ -10,7 +10,17 @@ export const getMovies = async (req, res) => {
       title: { $regex: req.query.title || "", $options: "i" },
       director: { $regex: req.query.director || "", $options: "i" },
       isWatched: req.query.isWatched || { $in: [true, false] },
+      rating: {
+        $lte: req.query.max_rating || 5,
+        $gte: req.query.min_rating || 0,
+      },
+      duration: {
+        $lte: req.query.max_duration || 500,
+        $gte: req.query.min_duration || 0,
+      },
+      genre: { $regex: req.query.genre || "", $options: "i" },
     });
+    console.log(movies.length)
     res.json(movies);
   } catch (error) {
     res.status(500).json({ message: error.message });
