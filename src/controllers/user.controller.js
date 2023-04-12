@@ -45,3 +45,25 @@ export const register = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 }
+
+export const updateById = async (req, res) => {
+  const user = new User({
+    _id: req.params.id,
+    ...req.body,
+  });
+  try {
+    await User.updateOne({ _id: req.params.id }, user);
+    res.json(user);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+}
+
+export const deleteById = async (req, res) => {
+  try {
+    await User.deleteOne({ _id: req.params.id });
+    res.json({ message: "Utilisateur supprimé" });
+  } catch (error) {
+    res.status(404).json({ message: "Utilisateur non trouvé" });
+  }
+}
