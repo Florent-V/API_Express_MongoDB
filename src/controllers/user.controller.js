@@ -24,7 +24,7 @@ export const getUserForAuth = async (req, res, next) => {
     if (!user) {
       res.status(401).json({ message: "Unauthorized" });
     }
-    res.user = user;
+    req.user = user;
     next();
 
   } catch (error) {

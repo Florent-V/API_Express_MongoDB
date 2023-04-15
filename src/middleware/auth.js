@@ -1,4 +1,5 @@
 import * as argon2 from "argon2";
+import jwt from 'jsonwebtoken'
 
 // Hashing options
 const options = {
@@ -22,13 +23,21 @@ export const hashPassword = async (req, res, next) => {
 // fonction pour comparer le mot de passe de l'utilisateur avec le hash
 export const verifyPassword = async (req, res) => {
   try {
-    const user = res.user;
+    const user = req.user;
+    console.log(user)
     const password = req.body.password;
     const isPasswordValid = await argon2.verify(user.password, password);
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Unauthorized" });
     } else {
-      return res.status(200).json({ message: "Access Granted" });
+      const payload = { sub: user._id };
+      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
+      delete req.user.password;
+      return res.status(200).json({ 
+        message: "Access Granted",
+        token,
+        user: req.user
+       });
     }
     next();
   } catch (error) {
