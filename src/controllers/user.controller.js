@@ -15,12 +15,9 @@ export const getUsers = async (req, res) => {
 }
 
 export const getUserForAuth = async (req, res, next) => {
-  console.log(req.body)
   const { email } = req.body
-  console.log(email)
   try {
     const user = await User.findOne({ email: email });
-    console.log(user)
     if (!user) {
       res.status(401).json({ message: "Unauthorized" });
     }

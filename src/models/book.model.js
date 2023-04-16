@@ -16,6 +16,11 @@ const bookSchema = new mongoose.Schema({
   isRead: {
     type: Boolean,
     required: true
+  },
+  pagesRead: {
+    type: Number,
+    default: 0,
+    required: true
   }
 },
 { timestamps: true});
