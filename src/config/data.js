@@ -104,3 +104,116 @@ export const users = [
     role: 'user'
   }
 ]
+
+export const movies = [
+  {
+    title: 'The Shawshank Redemption',
+    director: 'Frank Darabont',
+    year: 1994,
+    isWatched: false,
+    poster: 'https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg',
+    description: 'description',
+    rating: 8.7,
+    duration: 142,
+    genre: 'Drame'
+  },
+  {
+    title: 'The Shawshank Redemption',
+    director: 'Frank Darabont',
+    year: 1994,
+    isWatched: false,
+    poster: 'https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg',
+    description: 'description',
+    rating: 8.7,
+    duration: 142,
+    genre: 'Drame'
+  },
+  {
+    title: 'The Shawshank Redemption',
+    director: 'Frank Darabont',
+    year: 1994,
+    isWatched: false,
+    poster: 'https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg',
+    description: 'description',
+    rating: 8.7,
+    duration: 142,
+    genre: 'Drame'
+  },
+  {
+    title: 'The Shawshank Redemption',
+    director: 'Frank Darabont',
+    year: 1994,
+    isWatched: false,
+    poster: 'https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg',
+    description: 'description',
+    rating: 8.7,
+    duration: 142,
+    genre: 'Drame'
+  },
+  {
+    title: 'The Shawshank Redemption',
+    director: 'Frank Darabont',
+    year: 1994,
+    isWatched: false,
+    poster: 'https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg',
+    description: 'description',
+    rating: 8.7,
+    duration: 142,
+    genre: 'Drame'
+  },
+  {
+    title: 'The Shawshank Redemption',
+    director: 'Frank Darabont',
+    year: 1994,
+    isWatched: false,
+    poster: 'https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg',
+    description: 'description',
+    rating: 8.7,
+    duration: 142,
+    genre: 'Drame'
+  },
+  {
+    title: 'The Shawshank Redemption',
+    director: 'Frank Darabont',
+    year: 1994,
+    isWatched: false,
+    poster: 'https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg',
+    description: 'description',
+    rating: 8.7,
+    duration: 142,
+    genre: 'Drame'
+  },
+  {
+    title: 'The Shawshank Redemption',
+    director: 'Frank Darabont',
+    year: 1994,
+    isWatched: false,
+    poster: 'https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg',
+    description: 'description',
+    rating: 8.7,
+    duration: 142,
+    genre: 'Drame'
+  },
+  {
+    title: 'The Shawshank Redemption',
+    director: 'Frank Darabont',
+    year: 1994,
+    isWatched: false,
+    poster: 'https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg',
+    description: 'description',
+    rating: 8.7,
+    duration: 142,
+    genre: 'Drame'
+  },
+  {
+    title: 'The Shawshank Redemption',
+    director: 'Frank Darabont',
+    year: 1994,
+    isWatched: false,
+    poster: 'https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg',
+    description: 'description',
+    rating: 8.7,
+    duration: 142,
+    genre: 'Drame'
+  }
+]

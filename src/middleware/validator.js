@@ -40,7 +40,7 @@ export const movieSchema = Joi.object({
   isWatched: Joi.boolean().required(),
   poster: Joi.string().max(255).required(),
   description: Joi.string().max(2048).required(),
-  rating: Joi.number().min(0).max(5).required(),
+  rating: Joi.number().min(0).max(10).required(),
   duration: Joi.number().min(0).max(1000).required(),
   genre: Joi.string().required(),
   // actors: Joi.array().required(),
