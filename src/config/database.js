@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 import Book from '../models/book.model.js';
 import User from '../models/user.model.js';
-import { users, books } from './data.js';
+import Movie from '../models/movie.model.js';
+import { users, books, movies } from './data.js';
 import argon2 from "argon2";
 
 // Hashing options
@@ -62,12 +63,44 @@ export const migrateUser = async () => {
 
 export const migrateBook = async () => {
    try {
-      // Ajout d'un champ pagesRead à 0 pour tous les livres
-      await Book.updateMany({}, { $set: { pagesRead: 0 } });
+      // Suppression de tous les livres
+      await Book.deleteMany({});
+      // Récupération des utilisateurs avec le role "user" dans un tableau
+      const users = await User.find({ role: 'user' });
+
+      // Ajout des livres en Base de données
+      const preparedBooks = await Promise.all(books.map(async book => {
+        book.addedBy = users[Math.floor(Math.random() * users.length)]._id;
+        return new Book(book);
+      }));
+
+      await Book.insertMany(preparedBooks);
+        
       console.log('Migration Livres réussie !');
     } catch (error) {
       console.log(`Erreur de migration (books) : ${error.message}`);
     }
 };
+
+export const migrateMovie = async () => {
+    try {
+        // Suppression de tous les films
+        await Movie.deleteMany({});
+        // Récupération des utilisateurs avec le role "user" dans un tableau
+        const users = await User.find({ role: 'user' });
+  
+        // Ajout des films en Base de données
+        const preparedMovies = await Promise.all(movies.map(async movie => {
+          movie.addedBy = users[Math.floor(Math.random() * users.length)]._id;
+          return new Movie(movie);
+        }));
+  
+        await Movie.insertMany(preparedMovies);
+          
+        console.log('Migration Films réussie !');
+      } catch (error) {
+        console.log(`Erreur de migration (movies) : ${error.message}`);
+      }
+  }
 
 

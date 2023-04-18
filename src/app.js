@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
-import { connectDB, migrateBook, migrateUser } from './config/database.js';
+import { connectDB, migrateBook, migrateMovie, migrateUser } from './config/database.js';
 
 //import mongoose from 'mongoose';
 import bookRoutes from './routes/book.routes.js';
@@ -47,8 +47,9 @@ app.use((error, req, res, next) => {
 });
 
 await connectDB();
-await migrateBook();
-await migrateUser();
+//await migrateBook();
+//await migrateUser();
+await migrateMovie();
 
 export default app
 

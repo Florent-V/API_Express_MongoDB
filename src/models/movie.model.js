@@ -36,6 +36,11 @@ const movieSchema = new mongoose.Schema({
   genre: {
     type: String,
     required: true
+  },
+  addedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   }
   // actors: {
   //   type: Array,
