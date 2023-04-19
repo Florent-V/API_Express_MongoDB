@@ -11,7 +11,7 @@ export const getMovies = async (req, res) => {
       director: { $regex: req.query.director || "", $options: "i" },
       isWatched: req.query.isWatched || { $in: [true, false] },
       rating: {
-        $lte: req.query.max_rating || 5,
+        $lte: req.query.max_rating || 10,
         $gte: req.query.min_rating || 0,
       },
       duration: {
@@ -30,7 +30,8 @@ export const getMovies = async (req, res) => {
 export const getMovieById = async (req, res) => {
   try {
     const movie = await Movie.findOne({ _id: req.params.id });
-    res.json(movie);
+    if (!movie) return res.status(404).json({ message: "Le film n'a pas été trouvé" })
+    res.status(200).send(movie)
   } catch (error) {
     res.status(404).json({
       message: "Le film n'a pas été trouvé.",
