@@ -66,3 +66,15 @@ export const verifyToken = (req, res, next) => {
     res.status(500).json({ message: error.message });
   }
 }
+
+// fonction pour rajouter l'id de l'utilisateur dans la requête à l'aide du token
+export const addUserId = (req, res, next) => {
+  try {
+    req.body.userId = req.payload.sub;
+    console.log(req.body)
+    next();
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+}
