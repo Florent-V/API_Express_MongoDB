@@ -49,7 +49,7 @@ app.use((error, req, res, next) => {
 await connectDB();
 //await migrateBook();
 //await migrateUser();
-await migrateMovie();
+//await migrateMovie();
 
 export default app
 

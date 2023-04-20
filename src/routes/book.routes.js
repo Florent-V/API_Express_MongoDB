@@ -7,6 +7,9 @@ const router = express.Router();
 
 router.get('', getBooks);
 router.get('/:id', getBookById);
+
+// Necessite un token
+router.use(verifyToken);
 router.post('/', verifyToken, validateBook, createBook);
 router.put('/:id', validateBook, updateBook);
 router.delete('/:id', deleteBook);
