@@ -18,8 +18,8 @@ export const validate = (schema) => {
 }
 
 export const validateMovie = (req, res, next) => {
-  const { title, director, year, isWatched, poster, description, rating, duration, genre } = req.body
-  const cleanRequestBody = { title, director, year, isWatched, poster, description, rating, duration, genre }
+  const { title, director, year, isWatched, poster, description, rating, duration, genre, userId } = req.body
+  const cleanRequestBody = { title, director, year, isWatched, poster, description, rating, duration, genre, addedBy: userId }
 
   const { error } = movieSchema.validate(
     cleanRequestBody,
@@ -43,6 +43,7 @@ export const movieSchema = Joi.object({
   rating: Joi.number().min(0).max(10).required(),
   duration: Joi.number().min(0).max(1000).required(),
   genre: Joi.string().required(),
+  addedBy: Joi.string().hex().length(24).required()
   // actors: Joi.array().required(),
   // comments: Joi.array().required(),
 })
@@ -50,8 +51,8 @@ export const movieSchema = Joi.object({
 // max (new Date()).getFullYear()
 
 export const validateBook = (req, res, next) => {
-  const { title, author, pages, isRead } = req.body
-  const cleanRequestBody = { title, author, pages, isRead }
+  const { title, author, pages, isRead, userId } = req.body
+  const cleanRequestBody = { title, author, pages, isRead, addedBy: userId }
 
   const { error } = bookSchema.validate(
     cleanRequestBody,
@@ -69,7 +70,8 @@ export const bookSchema = Joi.object({
   title: Joi.string().max(255).required(),
   author: Joi.string().max(100).required(),
   pages: Joi.number().min(0).max(10000).required(),
-  isRead: Joi.boolean().required()
+  isRead: Joi.boolean().required(),
+  addedBy: Joi.string().hex().length(24).required()
 })
 
 export const validateUser = (req, res, next) => {
