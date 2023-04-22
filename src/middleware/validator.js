@@ -18,8 +18,8 @@ export const validate = (schema) => {
 }
 
 export const validateMovie = (req, res, next) => {
-  const { title, director, year, isWatched, poster, description, rating, duration, genre } = req.body
-  const cleanRequestBody = { title, director, year, isWatched, poster, description, rating, duration, genre }
+  const { title, director, year, isWatched, poster, description, rating, duration, genre, userId } = req.body
+  const cleanRequestBody = { title, director, year, isWatched, poster, description, rating, duration, genre, addedBy: userId }
 
   const { error } = movieSchema.validate(
     cleanRequestBody,
@@ -43,6 +43,7 @@ export const movieSchema = Joi.object({
   rating: Joi.number().min(0).max(10).required(),
   duration: Joi.number().min(0).max(1000).required(),
   genre: Joi.string().required(),
+  addedBy: Joi.string().hex().length(24).required()
   // actors: Joi.array().required(),
   // comments: Joi.array().required(),
 })
