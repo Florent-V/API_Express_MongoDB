@@ -6,14 +6,15 @@ import { getMovieOwner } from "../middleware/movies.middleware.js";
 
 const router = express.Router();
 
-router.get('', getMovies);
-router.get('/:id', getMovieById);
-
 // Necessite un token
 router.use(verifyToken);
-router.post('', addUserId, validateMovie, createMovie);
 
+router.get('', getMovies);
+router.get('/:id', getMovieOwner, verifyUser, getMovieById);
+
+router.post('', addUserId, validateMovie, createMovie);
 router.put('/:id', getMovieOwner, verifyUser, addUserId, validateMovie, updateMovie);
-router.delete('/:id', deleteMovie);
+
+router.delete('/:id', getMovieOwner, verifyUser, deleteMovie);
 
 export default router;
