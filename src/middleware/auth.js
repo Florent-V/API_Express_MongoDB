@@ -78,3 +78,16 @@ export const addUserId = (req, res, next) => {
     res.status(500).json({ message: error.message });
   }
 }
+
+// fonction pour vérifier que l'utilisateur connecté est bien celui qui a créé le film
+export const verifyUser = (req, res, next) => {
+  try {
+    if (req.payload.sub !== req.ownerId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+}

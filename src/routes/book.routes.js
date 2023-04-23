@@ -1,7 +1,8 @@
 import express from 'express';
 import { createBook, deleteBook, getBookById, getBooks, updateBook } from '../controllers/book.controller.js';
 import { validateBook } from '../middleware/validator.js';
-import { verifyToken, addUserId } from '../middleware/auth.js';
+import { verifyToken, addUserId, verifyUser } from '../middleware/auth.js';
+import { getBookOwner } from '../middleware/books.middleware.js';
 
 const router = express.Router();
 
@@ -12,7 +13,7 @@ router.get('/:id', getBookById);
 router.use(verifyToken);
 
 router.post('/', addUserId, validateBook, createBook);
-router.put('/:id', validateBook, updateBook);
+router.put('/:id', getBookOwner, verifyUser, addUserId, validateBook, updateBook);
 router.delete('/:id', deleteBook);
 
 export default router;
