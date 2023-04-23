@@ -2,7 +2,8 @@ import Movie from "../models/movie.model.js";
 
 export const getMovies = async (req, res) => {
   try {
-    const movies = await Movie.find({
+    console.log(req.query)
+    const query = {
       year: {
         $lt: req.query.max_year || Infinity,
         $gt: req.query.min_year || 0,
@@ -19,7 +20,10 @@ export const getMovies = async (req, res) => {
         $gte: req.query.min_duration || 0,
       },
       genre: { $regex: req.query.genre || "", $options: "i" },
-    });
+    }
+    // vérifier si le role est admin
+    if (req.payload.role !== 'admin') query.addedBy = req.payload.sub;
+    const movies = await Movie.find(query);
     console.log(movies.length)
     res.json(movies);
   } catch (error) {

@@ -3,20 +3,23 @@ import Book from '../models/book.model.js';
 export const getBooks = async (req, res) => {
    try {
     console.log(req.query)
-      const books = await Book.find({
-        pages:{ 
-          $lt: req.query.max_pages || Infinity,
-          $gt: req.query.min_pages || 0
-        },
-        title: { $regex: req.query.title || '', $options: 'i' },
-        author: { $regex: req.query.author || '', $options: 'i' },
-        isRead: req.query.isRead || { $in: [true, false] }
-      });
-      console.log(books.length)
-      res.json(books);
-   } catch (error) {
+    const query = {
+      pages:{ 
+        $lt: req.query.max_pages || Infinity,
+        $gt: req.query.min_pages || 0
+      },
+      title: { $regex: req.query.title || '', $options: 'i' },
+      author: { $regex: req.query.author || '', $options: 'i' },
+      isRead: req.query.isRead || { $in: [true, false] }
+    }
+    // vérifier si le role est admin
+    if (req.payload.role !== 'admin') query.addedBy = req.payload.sub;
+    const books = await Book.find(query);
+    console.log(books.length)
+    res.json(books);
+    } catch (error) {
       res.status(500).json({ message: error.message });
-   }
+    }
 };
 
 export const getBookById = async (req, res) => {
