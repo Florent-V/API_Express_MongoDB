@@ -74,3 +74,33 @@ export const deleteBook = async (req, res) => {
     });
   }
 };
+
+export const updatePagesRead = async (req, res) => {
+  try {
+    console.log(req.params)
+    const book = await Book.findOne({ _id: req.params.id });
+    if (!book) return res.status(404).json({ message: "Le livre n'a pas été trouvé" })
+    // test pour vérifier que le nombre de pages lues est bien un nombre, supérieur à 0 et inférieur au nombre de pages du livre, ou vaut "up", ou vaut "down"
+    if (!(['up', 'down'].includes(req.params.pages) || (req.params.pages >= 0 && req.params.pages <= book.pages))) {
+      return res.status(400).json({ message: `Le nombre de pages lues doit être un nombre, supérieur à 0 et inférieur au nombre de pages du livre(${book.pages}), ou vaut 'up', ou vaut 'down'` })
+    }
+
+    // switch pour les cas 1, -1, nombre
+    switch (req.params.pages) {
+      case 'up':
+        if (book.pagesRead + 1 <= book.pages) book.pagesRead += 1
+        break;
+      case 'down':
+        if (book.pagesRead - 1 >= 0) book.pagesRead -= 1
+        break;
+      default:
+        book.pagesRead = req.params.pages;
+        break;
+    }
+    await Book.updateOne({ _id: req.params.id }, book)
+    res.json(book);
+  } catch (error) {
+    console.log('ça sent le paté')
+    res.status(400).json({ message: error.message });
+  }
+}
