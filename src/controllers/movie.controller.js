@@ -65,7 +65,6 @@ export const updateMovie = async (req, res) => {
     _id: req.params.id,
     ...req.body,
   });
-  console.log(movie)
 
   try {
     await Movie.updateOne({ _id: req.params.id }, movie);

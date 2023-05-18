@@ -72,9 +72,10 @@ export const validateBook = (req, res, next) => {
     pages,
     pagesRead,
     isRead,
-    addedBy: userId,
-    cover: req.file.filename
+    addedBy: userId
   }
+
+  if (req.file) cleanRequestBody.cover = req.file.filename;
 
   const { error } = bookSchema.validate(
     cleanRequestBody,

@@ -41,6 +41,9 @@ export const createBook = async (req, res) => {
     ...req.body,
   });
 
+  // ajout string vide clé cover de book si elle n'existe pas
+  if (!book.cover) book.cover = "";
+
    try {
       const newBook = await book.save();
       res.status(201).json(newBook);

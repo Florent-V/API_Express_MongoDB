@@ -29,7 +29,7 @@ const bookSchema = new mongoose.Schema({
   },
   cover: {
     type: String,
-    default: ''
+    required: false
   }
 },
 { timestamps: true});
