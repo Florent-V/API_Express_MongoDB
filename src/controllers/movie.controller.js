@@ -49,6 +49,9 @@ export const createMovie = async (req, res) => {
     ...req.body,
   });
 
+  // ajout string vide clé poster de movie si elle n'existe pas
+  if (!movie.poster) movie.poster = "";
+
   try {
     const newMovie = await movie.save();
     res.status(201).json(newMovie);
@@ -62,6 +65,8 @@ export const updateMovie = async (req, res) => {
     _id: req.params.id,
     ...req.body,
   });
+  console.log(movie)
+
   try {
     await Movie.updateOne({ _id: req.params.id }, movie);
     res.json(movie);

@@ -19,19 +19,20 @@ export const validate = (schema) => {
 
 export const validateMovie = (req, res, next) => {
   req.body = { ...req.body, userId: req.payload.sub}
-  const { title, director, year, isWatched, poster, description, rating, duration, genre, userId } = req.body
+  const { title, director, year, isWatched, description, rating, duration, genre, userId } = req.body
   const cleanRequestBody = {
     title,
     director,
     year,
     isWatched,
-    poster : req.file ? req.file.filename : '',
     description,
     rating,
     duration,
     genre,
     addedBy: userId
   }
+
+  if (req.file) cleanRequestBody.poster = req.file.filename;
 
   const { error } = movieSchema.validate(
     cleanRequestBody,
