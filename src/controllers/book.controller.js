@@ -24,7 +24,6 @@ export const getBooks = async (req, res) => {
 
 export const getBookById = async (req, res) => {
   console.log(req.params)
-
    try {
       const book = await Book.findOne({ _id: req.params.id });
       if (!book) return res.status(404).json({ message: "Le livre n'a pas été trouvé" })
@@ -38,8 +37,6 @@ export const getBookById = async (req, res) => {
 };
 
 export const createBook = async (req, res) => {
-  console.log('createBook')
-  console.log(req.body)
    const book = new Book({
     ...req.body,
   });
@@ -102,7 +99,6 @@ export const updatePagesRead = async (req, res) => {
     await Book.updateOne({ _id: req.params.id }, book)
     res.json(book);
   } catch (error) {
-    console.log('ça sent le paté')
     res.status(400).json({ message: error.message });
   }
 }

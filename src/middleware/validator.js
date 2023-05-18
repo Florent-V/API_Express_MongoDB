@@ -32,7 +32,6 @@ export const validateMovie = (req, res, next) => {
     genre,
     addedBy: userId
   }
-  console.log(cleanRequestBody)
 
   const { error } = movieSchema.validate(
     cleanRequestBody,
@@ -42,7 +41,6 @@ export const validateMovie = (req, res, next) => {
     res.status(422).json({ validationErrors: error.details });
   } else {
     req.body = cleanRequestBody;
-    console.log(req.body)
     next();
   }
 }
@@ -76,7 +74,6 @@ export const validateBook = (req, res, next) => {
     addedBy: userId,
     cover: req.file.filename
   }
-  console.log(cleanRequestBody)
 
   const { error } = bookSchema.validate(
     cleanRequestBody,
