@@ -35,7 +35,7 @@ app.use('/api/movies', movieRoutes);
 app.use('/api/users', userRoutes);
 
 app.get('/', (req, res) => {
-  console.log('ok');
+  console.log('Welcome to this Express_Mongo API');
   res.send("Welcome to this Express_Mongo API")
 });
 
