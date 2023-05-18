@@ -38,6 +38,8 @@ export const getBookById = async (req, res) => {
 };
 
 export const createBook = async (req, res) => {
+  console.log('createBook')
+  console.log(req.body)
    const book = new Book({
     ...req.body,
   });

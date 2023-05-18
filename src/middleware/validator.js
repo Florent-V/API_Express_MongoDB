@@ -18,8 +18,21 @@ export const validate = (schema) => {
 }
 
 export const validateMovie = (req, res, next) => {
+  req.body = { ...req.body, userId: req.payload.sub}
   const { title, director, year, isWatched, poster, description, rating, duration, genre, userId } = req.body
-  const cleanRequestBody = { title, director, year, isWatched, poster, description, rating, duration, genre, addedBy: userId }
+  const cleanRequestBody = {
+    title,
+    director,
+    year,
+    isWatched,
+    poster : req.file ? req.file.filename : '',
+    description,
+    rating,
+    duration,
+    genre,
+    addedBy: userId
+  }
+  console.log(cleanRequestBody)
 
   const { error } = movieSchema.validate(
     cleanRequestBody,
@@ -29,6 +42,7 @@ export const validateMovie = (req, res, next) => {
     res.status(422).json({ validationErrors: error.details });
   } else {
     req.body = cleanRequestBody;
+    console.log(req.body)
     next();
   }
 }
@@ -38,7 +52,7 @@ export const movieSchema = Joi.object({
   director: Joi.string().max(255).required(),
   year: Joi.number().min(1895).max((new Date()).getFullYear()).required(),
   isWatched: Joi.boolean().required(),
-  poster: Joi.string().max(255).required(),
+  poster: Joi.string().max(255).allow(''),
   description: Joi.string().max(2048).required(),
   rating: Joi.number().min(0).max(10).required(),
   duration: Joi.number().min(0).max(1000).required(),
@@ -51,8 +65,18 @@ export const movieSchema = Joi.object({
 // max (new Date()).getFullYear()
 
 export const validateBook = (req, res, next) => {
-  const { title, author, pages, isRead, userId } = req.body
-  const cleanRequestBody = { title, author, pages, isRead, addedBy: userId }
+  req.body = { ...req.body, userId: req.payload.sub}
+  const { title, author, pages, isRead, userId, cover, pagesRead } = req.body
+  const cleanRequestBody = {
+    title,
+    author,
+    pages,
+    pagesRead,
+    isRead,
+    addedBy: userId,
+    cover: req.file.filename
+  }
+  console.log(cleanRequestBody)
 
   const { error } = bookSchema.validate(
     cleanRequestBody,
@@ -71,7 +95,9 @@ export const bookSchema = Joi.object({
   author: Joi.string().max(100).required(),
   pages: Joi.number().min(0).max(10000).required(),
   isRead: Joi.boolean().required(),
-  addedBy: Joi.string().hex().length(24).required()
+  pagesRead: Joi.number().min(0).max(Joi.ref('pages')).required(),
+  addedBy: Joi.string().hex().length(24).required(),
+  cover: Joi.string().max(255).allow(''),
 })
 
 export const validateUser = (req, res, next) => {

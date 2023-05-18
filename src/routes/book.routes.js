@@ -3,6 +3,7 @@ import { createBook, deleteBook, getBookById, getBooks, updateBook, updatePagesR
 import { validateBook } from '../middleware/validator.js';
 import { verifyToken, addUserId, verifyUser } from '../middleware/auth.js';
 import { getBookOwner } from '../middleware/books.middleware.js';
+import { uploadCover } from '../middleware/upload.js';
 
 const router = express.Router();
 
@@ -12,11 +13,10 @@ router.use(verifyToken);
 router.get('', getBooks);
 router.get('/:id', getBookOwner, verifyUser, getBookById);
 
-router.post('/', addUserId, validateBook, createBook);
-router.put('/:id', getBookOwner, verifyUser, addUserId, validateBook, updateBook);
+router.post('/', uploadCover, validateBook, createBook);
+router.put('/:id', getBookOwner, verifyUser, uploadCover, validateBook, updateBook);
 
 router.patch('/:id/pages-read/:pages', getBookOwner, verifyUser, updatePagesRead);
-
 
 router.delete('/:id', getBookOwner, verifyUser, deleteBook);
 

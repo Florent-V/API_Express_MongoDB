@@ -1,21 +1,31 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
-import { connectDB, migrateBook, migrateMovie, migrateUser } from './config/database.js';
+import { connectDB, migrateBook, migrateMovie, migrateUser, addCoverToBook } from './config/database.js';
+import cors from 'cors';
 
 //import mongoose from 'mongoose';
 import bookRoutes from './routes/book.routes.js';
 import movieRoutes from './routes/movie.routes.js';
 import userRoutes from './routes/user.routes.js';
+import { verifyToken } from './middleware/auth.js';
 
 dotenv.config();
 const app = express();
+
+app.use(cors({
+  origin: '*',
+  credentials: true
+}));
 
 // Middleware pour parser les données de la requête en JSON
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+// serve the `backend/public` folder for public resources
+app.use(express.static('public'))
 
 // Routes pour les livres
 app.use('/api/books', bookRoutes);
@@ -47,9 +57,10 @@ app.use((error, req, res, next) => {
 });
 
 await connectDB();
-//await migrateBook();
-//await migrateUser();
-//await migrateMovie();
+// await migrateBook();
+// await migrateUser();
+// await migrateMovie();
+// await addCoverToBook();
 
 export default app
 

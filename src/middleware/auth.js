@@ -71,7 +71,6 @@ export const verifyToken = (req, res, next) => {
 export const addUserId = (req, res, next) => {
   try {
     req.body.userId = req.payload.sub;
-    console.log(req.body)
     next();
   } catch (error) {
     console.log(error);

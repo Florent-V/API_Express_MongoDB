@@ -103,4 +103,14 @@ export const migrateMovie = async () => {
       }
   }
 
-
+export const addCoverToBook = async () => {
+  try {
+    const result = await Book.updateMany(
+      { cover: { $exists: false } },
+      { $set: { cover: '' } });
+    console.log('Mise à jour effectuée avec succès !');
+    console.log('Nombre d\'entités mises à jour :', result.modifiedCount);
+  } catch (error) {
+    console.error(`Erreur de mise à jour : ${error.message}`);
+  }
+};

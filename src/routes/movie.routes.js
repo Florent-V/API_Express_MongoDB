@@ -3,6 +3,7 @@ import { createMovie, deleteMovie, getMovieById, getMovies, updateMovie } from "
 import { validateMovie } from "../middleware/validator.js";
 import { verifyToken, addUserId, verifyUser } from "../middleware/auth.js";
 import { getMovieOwner } from "../middleware/movies.middleware.js";
+import { uploadCover } from "../middleware/upload.js";
 
 const router = express.Router();
 
@@ -12,8 +13,8 @@ router.use(verifyToken);
 router.get('', getMovies);
 router.get('/:id', getMovieOwner, verifyUser, getMovieById);
 
-router.post('', addUserId, validateMovie, createMovie);
-router.put('/:id', getMovieOwner, verifyUser, addUserId, validateMovie, updateMovie);
+router.post('', uploadCover, validateMovie, createMovie);
+router.put('/:id', getMovieOwner, verifyUser, uploadCover, validateMovie, updateMovie);
 
 router.delete('/:id', getMovieOwner, verifyUser, deleteMovie);
 
