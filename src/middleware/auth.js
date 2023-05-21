@@ -78,11 +78,23 @@ export const addUserId = (req, res, next) => {
   }
 }
 
-// fonction pour vérifier que l'utilisateur connecté est bien celui qui a créé le film
+// fonction pour vérifier que l'utilisateur connecté est bien celui qui a créé le film ou le livre
 export const verifyUser = (req, res, next) => {
   try {
     console.log(req.payload)
     if (req.payload.sub !== req.ownerId && req.payload.role !== "admin") {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+}
+
+export const verifyAccess = (req, res, next) => {
+  try {
+    if (req.payload.sub !== req.params.id && req.payload.role !== "admin") {
       return res.status(401).json({ message: "Unauthorized" });
     }
     next();
