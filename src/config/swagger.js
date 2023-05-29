@@ -16,6 +16,15 @@ export const swaggerOptions = {
         url: process.env.BASE_URL || 'http://localhost/5000',
       },
     ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
   },
   // spécification des chemins vers les fichiers contenant les routes
   apis: ['./src/routes/*.js'],

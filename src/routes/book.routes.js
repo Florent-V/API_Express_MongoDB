@@ -41,16 +41,18 @@ const router = express.Router();
  *           format: date-time
  */
 
-// Necessite un token
+// Token nécessaire pour les routes ci-dessous
 router.use(verifyToken);
 
 /**
  * @swagger
  * /api/books:
  *   get:
- *     summary: Récupérer la liste des livres
+ *     summary: Récupérer la liste des livres de l'utilisateur
  *     tags: [Livres]
- *     description: Récupère la liste complète des livres
+ *     description: Récupère la liste complète des livres de l'utilisateur
+ *     security:
+ *      - bearerAuth: []
  *     responses:
  *       200:
  *         description: Succès - Liste des livres
