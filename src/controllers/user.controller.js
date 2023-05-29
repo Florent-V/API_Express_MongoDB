@@ -15,6 +15,8 @@ export const getUsers = async (req, res) => {
 }
 
 export const getUserForAuth = async (req, res, next) => {
+  console.log('body')
+  console.log(req.body)
   const { email } = req.body
   try {
     const user = await User.findOne({ email: email });
@@ -37,7 +39,10 @@ export const register = async (req, res) => {
   console.log(user)
   try {
     const newUser = await user.save();
-    res.status(201).json(newUser);
+    // supprier la clé password de l'objet newUser
+    const newUserObjet = newUser.toObject();
+    delete newUserObjet.password;
+    res.status(201).json(newUserObjet);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

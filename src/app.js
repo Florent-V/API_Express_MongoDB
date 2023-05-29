@@ -1,14 +1,17 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
-import { connectDB, migrateBook, migrateMovie, migrateUser, addCoverToBook } from './config/database.js';
+import { connectDB } from './config/database.js';
 import cors from 'cors';
+import swaggerJsDoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerOptions } from './config/swagger.js';
+
 
 //import mongoose from 'mongoose';
 import bookRoutes from './routes/book.routes.js';
 import movieRoutes from './routes/movie.routes.js';
 import userRoutes from './routes/user.routes.js';
-import { verifyToken } from './middleware/auth.js';
 
 dotenv.config();
 const app = express();
@@ -26,6 +29,12 @@ app.use(cookieParser());
 
 // serve the `backend/public` folder for public resources
 app.use(express.static('public'))
+
+// middleware Swagger
+const specs = swaggerJsDoc(swaggerOptions);
+
+// Utilisez le middleware Swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // Routes pour les livres
 app.use('/api/books', bookRoutes);

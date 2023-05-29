@@ -7,10 +7,66 @@ import { uploadCover } from '../middleware/upload.js';
 
 const router = express.Router();
 
+/**
+ * @swagger
+ * tags:
+ *   name: Livres
+ *   description: API pour les opérations liées aux livres
+ * components:
+ *   schemas:
+ *     Book:
+ *       type: object
+ *       properties:
+ *         _id:
+ *           type: string
+ *         title:
+ *           type: string
+ *         author:
+ *           type: string
+ *         pages:
+ *           type: number
+ *         isRead:
+ *           type: boolean
+ *         pagesRead:
+ *           type: number
+ *         addedBy:
+ *           type: string
+ *         cover:
+ *           type: string
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ */
+
 // Necessite un token
 router.use(verifyToken);
 
+/**
+ * @swagger
+ * /api/books:
+ *   get:
+ *     summary: Récupérer la liste des livres
+ *     tags: [Livres]
+ *     description: Récupère la liste complète des livres
+ *     responses:
+ *       200:
+ *         description: Succès - Liste des livres
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Book'
+ *       500:
+ *         description: Erreur interne du serveur
+ */
 router.get('', getBooks);
+
+
+
 router.get('/:id', getBookOwner, verifyUser, getBookById);
 
 router.post('/', uploadCover, validateBook, createBook);
